@@ -37,10 +37,9 @@
   }
 
   main {
-    width: min(100% - 96px, 1180px);
-    max-width: 1180px;
+    max-width: 880px;
     margin: 0 auto;
-    padding: 64px 0 96px;
+    padding: 64px 48px 96px;
   }
 
   a {
@@ -80,7 +79,7 @@
   header.hero p.role {
     font-size: 1.05rem;
     color: var(--ink-muted);
-    max-width: 72ch;
+    max-width: 46ch;
     margin: 14px 0 0;
   }
 
@@ -107,6 +106,7 @@
   .node-line:nth-of-type(2) { animation-delay: 0.08s; }
   .node-line:nth-of-type(3) { animation-delay: 0.16s; }
   .node-line:nth-of-type(4) { animation-delay: 0.24s; }
+  .node-line:nth-of-type(5) { animation-delay: 0.32s; }
 
   @keyframes draw {
     to { stroke-dashoffset: 0; }
@@ -136,7 +136,7 @@
 
   section .meta { display: block; margin-bottom: 6px; }
 
-  section p { margin: 12px 0; max-width: 78ch; }
+  section p { margin: 12px 0; max-width: 62ch; }
 
   section .links {
     margin-top: 18px;
@@ -180,30 +180,6 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.88rem;
   }
-
-  @media (max-width: 900px) {
-    main {
-      width: calc(100% - 64px);
-    }
-  }
-
-  @media (max-width: 600px) {
-    main {
-      width: calc(100% - 40px);
-      padding: 40px 0 64px;
-    }
-
-    h1 { font-size: 1.9rem; }
-
-    .diagram-wrap {
-      margin: 36px -8px 4px;
-    }
-
-    section {
-      margin-top: 44px;
-      padding-top: 30px;
-    }
-  }
 </style>
 </head>
 <body>
@@ -215,34 +191,40 @@
     <p class="role">I like connecting the disparate parts of a system — technical, human, and everything between. Cognitive Science student at UC Berkeley (Computational Modeling), minoring in Computer Science and Data Science.</p>
   </header>
 
-  <div class="diagram-wrap" aria-hidden="false" role="img" aria-label="Diagram connecting four areas of work — FSAE, research, writing, and music — to a central point.">
-    <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg">
-      <path class="node-line" d="M 280 110 L 90 40" />
-      <path class="node-line" d="M 280 110 L 470 40" />
-      <path class="node-line" d="M 280 110 L 90 180" />
-      <path class="node-line" d="M 280 110 L 470 180" />
+  <div class="diagram-wrap" aria-hidden="false" role="img" aria-label="Diagram connecting five areas of work — FSAE, research, design, writing, and music — to a central point.">
+    <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+      <path class="node-line" d="M 280 150 L 280 50" />
+      <path class="node-line" d="M 280 150 L 375 119" />
+      <path class="node-line" d="M 280 150 L 339 231" />
+      <path class="node-line" d="M 280 150 L 221 231" />
+      <path class="node-line" d="M 280 150 L 185 119" />
 
-      <circle class="node-dot center" cx="280" cy="110" r="20" />
-      <text class="node-label center" x="280" y="114" text-anchor="middle">YL</text>
+      <circle class="node-dot center" cx="280" cy="150" r="20" />
+      <text class="node-label center" x="280" y="154" text-anchor="middle">YL</text>
 
       <a class="node-link" href="#fsae" aria-label="Jump to FSAE section">
-        <circle class="node-dot" cx="90" cy="40" r="16" />
-        <text class="node-label" x="90" y="18" text-anchor="middle">FSAE</text>
+        <circle class="node-dot" cx="280" cy="50" r="16" />
+        <text class="node-label" x="280" y="12" text-anchor="middle">FSAE</text>
       </a>
 
       <a class="node-link" href="#research" aria-label="Jump to research section">
-        <circle class="node-dot" cx="470" cy="40" r="16" />
-        <text class="node-label" x="470" y="18" text-anchor="middle">Research</text>
+        <circle class="node-dot" cx="375" cy="119" r="16" />
+        <text class="node-label" x="411" y="112" text-anchor="middle">Research</text>
+      </a>
+
+      <a class="node-link" href="#eink" aria-label="Jump to design section">
+        <circle class="node-dot accent" cx="339" cy="231" r="16" />
+        <text class="node-label" x="361" y="266" text-anchor="middle">Design</text>
       </a>
 
       <a class="node-link" href="#writing" aria-label="Jump to writing section">
-        <circle class="node-dot accent" cx="90" cy="180" r="16" />
-        <text class="node-label" x="90" y="208" text-anchor="middle">Writing</text>
+        <circle class="node-dot accent" cx="221" cy="231" r="16" />
+        <text class="node-label" x="199" y="266" text-anchor="middle">Writing</text>
       </a>
 
       <a class="node-link" href="#music" aria-label="Jump to music section">
-        <circle class="node-dot accent" cx="470" cy="180" r="16" />
-        <text class="node-label" x="470" y="208" text-anchor="middle">Music</text>
+        <circle class="node-dot accent" cx="185" cy="119" r="16" />
+        <text class="node-label" x="149" y="112" text-anchor="middle">Music</text>
       </a>
     </svg>
   </div>
@@ -265,6 +247,15 @@
     <p>I engineered data pipelines (MATLAB, Python) to clean, standardize, and restructure the dataset, applying hierarchical clustering to expose non-linear spatiotemporal patterns, then built per-pollutant Random Forest regression models (scikit-learn, R² up to 0.99) to isolate the anthropogenic and meteorological drivers behind them.</p>
     <div class="links">
       <a href="https://doi.org/10.1007/978-3-032-21985-5_34" target="_blank" rel="noopener">Read the chapter →</a>
+    </div>
+  </section>
+
+  <section id="eink">
+    <span class="meta">Early-stage e-ink Bible-reader startup — June 2025 to August 2025</span>
+    <h2>E-Ink Reader Interface — Product Design / UX</h2>
+    <p>I designed the navigation architecture and user flows for an early-stage e-ink reading device, covering reading, notes, calendar, and reading-plan features — mapped out through hand-drawn wireframes, then refined based on usability reasoning and intuitive user behavior.</p>
+    <div class="links">
+      <a href="https://drive.google.com/file/d/1sVgRym6we5EyV4ox--nwmoeAgGDk8ojS/view?usp=drive_link" target="_blank" rel="noopener">View the wireframes →</a>
     </div>
   </section>
 
