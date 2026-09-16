@@ -6,16 +6,17 @@
 <title>Yumo Liu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #F7F7F4;
-    --ink: #1B1F23;
-    --ink-muted: #5B5F66;
-    --rule: #D8D8D2;
-    --accent: #1F4E79;
-    --accent-soft: #E7EEF3;
-    --amber: #C98A2B;
+    --cream: #F6F1E7;
+    --cream-2: #EEE6D4;
+    --navy: #16213D;
+    --navy-deep: #0E1830;
+    --ink: #17203A;
+    --ink-muted: #6B6252;
+    --rule: rgba(23, 32, 58, 0.16);
+    --rule-on-dark: rgba(246, 241, 231, 0.22);
   }
 
   * { box-sizing: border-box; }
@@ -24,304 +25,779 @@
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
   }
 
   body {
     margin: 0;
-    background: var(--paper);
+    background: var(--cream);
     color: var(--ink);
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 17px;
     line-height: 1.6;
+    overflow-x: hidden;
   }
 
   main {
     width: min(100% - 96px, 1180px);
     max-width: 1180px;
     margin: 0 auto;
-    padding: 64px 0 96px;
+    padding: 72px 0 0;
   }
 
-  a {
-    color: var(--accent);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  a:hover { color: var(--amber); }
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 
   a:focus-visible, button:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent, var(--navy));
     outline-offset: 3px;
   }
 
   h1, h2, h3 {
     font-family: 'Newsreader', serif;
     font-weight: 500;
-    line-height: 1.2;
+    line-height: 1.08;
     margin: 0;
   }
 
-  h1 { font-size: 2.1rem; }
-  h2 { font-size: 1.4rem; margin-bottom: 14px; }
+  h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); margin-bottom: 16px; letter-spacing: -0.01em; }
+  h3 { font-family: 'IBM Plex Sans', sans-serif; font-size: 1.06rem; font-weight: 600; margin: 0 0 8px; }
 
-  .meta {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.82rem;
-    color: var(--ink-muted);
-    letter-spacing: 0.01em;
+  h3::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    margin-right: 10px;
+    background: var(--accent, var(--navy));
+    transform: translateY(-1px) rotate(45deg);
   }
 
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+  }
+
+  p { margin: 12px 0; max-width: 62ch; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(.2,.7,.3,1), transform 0.8s cubic-bezier(.2,.7,.3,1);
+  }
+  .reveal.is-in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: 0.06s; }
+  .reveal.d2 { transition-delay: 0.12s; }
+  .reveal.d3 { transition-delay: 0.18s; }
+
+  /* ---------- buttons / links ---------- */
+  .links { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 14px 16px; }
+
+  .btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--accent, var(--navy));
+    background: transparent;
+    border: 1.5px solid var(--accent, var(--navy));
+    padding: 11px 18px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+    box-shadow: 0 0 0 0 var(--accent, var(--navy));
+  }
+
+  .btn-link::after {
+    content: '\2192';
+    transition: transform 0.18s ease;
+  }
+
+  .btn-link:hover, .btn-link:focus-visible {
+    background: var(--accent, var(--navy));
+    color: var(--on-accent, var(--cream));
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 0 var(--accent, var(--navy));
+  }
+
+  .btn-link:hover::after { transform: translateX(4px); }
+
+  /* ---------- hero ---------- */
   header.hero {
-    margin-bottom: 8px;
+    position: relative;
+    padding-bottom: 8px;
+    --accent: #2B3FA6;
+    --bright: #3E5BEC;
+  }
+
+  .hero-shape {
+    position: absolute;
+    top: -60px;
+    right: -6vw;
+    width: 46vw;
+    max-width: 480px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, var(--bright), transparent 72%);
+    opacity: 0.16;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  header.hero .eyebrow { position: relative; z-index: 1; }
+
+  header.hero h1 {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(3.4rem, 9vw, 6.6rem);
+    margin: 10px 0 0;
+    letter-spacing: -0.03em;
   }
 
   header.hero p.role {
-    font-size: 1.05rem;
+    position: relative;
+    z-index: 1;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.14rem;
     color: var(--ink-muted);
     max-width: 46ch;
-    margin: 14px 0 0;
+    margin: 22px 0 0;
   }
 
-  /* --- node diagram --- */
-  .diagram-wrap {
-    margin: 48px 0 8px;
+  /* ---------- index nav ---------- */
+  nav.index {
+    margin: 72px 0 0;
+    border-top: 1.5px solid var(--ink);
   }
 
-  .diagram-wrap svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+  nav.index .eyebrow { display: block; margin: 20px 0 4px; }
 
-  .node-line {
-    stroke: var(--rule);
-    stroke-width: 1.5;
-    fill: none;
-    stroke-dasharray: 240;
-    stroke-dashoffset: 240;
-    animation: draw 1.1s ease-out forwards;
-  }
-
-  .node-line:nth-of-type(2) { animation-delay: 0.08s; }
-  .node-line:nth-of-type(3) { animation-delay: 0.16s; }
-  .node-line:nth-of-type(4) { animation-delay: 0.24s; }
-  .node-line:nth-of-type(5) { animation-delay: 0.32s; }
-
-  @keyframes draw {
-    to { stroke-dashoffset: 0; }
-  }
-
-  .node-dot { fill: var(--paper); stroke: var(--accent); stroke-width: 1.5; }
-  .node-dot.center { fill: var(--accent); stroke: var(--accent); }
-  .node-dot.accent { stroke: var(--amber); }
-
-  .node-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    fill: var(--ink);
-  }
-
-  .node-label.center { fill: var(--paper); font-weight: 500; }
-
-  a.node-link { cursor: pointer; }
-  a.node-link:hover .node-dot { stroke: var(--amber); }
-
-  /* --- sections --- */
-  section {
-    margin-top: 56px;
-    padding-top: 40px;
-    border-top: 1px solid var(--rule);
-  }
-
-  section .meta { display: block; margin-bottom: 6px; }
-
-  section p { margin: 12px 0; max-width: 62ch; }
-
-  section .links {
-    margin-top: 18px;
+  .index-row {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px 22px;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+    position: relative;
   }
 
-  section .links a {
+  .index-row .index-left { display: flex; align-items: baseline; gap: 22px; min-width: 0; }
+
+  .index-row .idx-num {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    width: 22px;
+    flex-shrink: 0;
   }
 
-  .subwork {
-    margin-top: 24px;
-    padding-left: 18px;
-    border-left: 2px solid var(--rule);
-  }
-
-  .subwork h3 {
-    font-size: 1.05rem;
+  .index-row .idx-name {
+    font-family: 'Newsreader', serif;
     font-weight: 500;
-    margin-bottom: 6px;
+    font-size: clamp(1.4rem, 3.6vw, 2.1rem);
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+  }
+
+  .index-row .idx-arrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--row-accent);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .index-row:hover .idx-name { color: var(--row-accent); transform: translateX(6px); }
+  .index-row:hover .idx-arrow { opacity: 1; transform: translateX(0); }
+  .index-row:hover .idx-num { color: var(--row-accent); }
+
+  /* ---------- project sections (shared) ---------- */
+  .project { position: relative; }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    column-gap: 44px;
+  }
+
+  .proj-num {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(3.6rem, 7vw, 5.4rem);
+    line-height: 0.85;
+    color: var(--bright, var(--accent));
+    -webkit-text-stroke: 1.5px var(--bright, var(--accent));
+    transition: transform 0.35s ease;
+  }
+
+  .project:hover .proj-num { transform: rotate(-4deg) scale(1.05); }
+
+  .proj-meta {
+    margin-top: 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    border-left: 2px solid var(--accent);
+    padding-left: 14px;
+  }
+
+  .kicker {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--on-accent, var(--cream));
+    background: var(--accent);
+    padding: 4px 10px;
+    margin-bottom: 14px;
   }
 
   .placeholder-note {
-    font-size: 0.88rem;
-    color: var(--ink-muted);
+    margin-top: 18px;
+    padding-left: 16px;
+    border-left: 2px solid var(--rule);
+    font-family: 'Newsreader', serif;
     font-style: italic;
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    max-width: 56ch;
   }
 
-  footer {
-    margin-top: 64px;
-    padding-top: 32px;
-    border-top: 1px solid var(--rule);
-  }
-
-  footer .links {
-    display: flex;
-    gap: 20px;
+  .stat {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 22px 0 4px;
+    padding: 14px 20px;
+    border: 1.5px solid var(--accent);
+    position: relative;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.88rem;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .stat::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 6px;
+    width: 100%; height: 100%;
+    background: var(--bright, var(--accent));
+    opacity: 0.28;
+    z-index: -1;
+  }
+
+  .subwork {
+    margin-top: 34px;
+    padding-top: 26px;
+    border-top: 1px dashed var(--rule);
+  }
+  .subwork:first-of-type { border-top: none; padding-top: 0; }
+
+  /* ===================== 01 · FSAE — full-bleed band ===================== */
+  section.fsae {
+    --accent: #2B3FA6;
+    --bright: #3E5BEC;
+    --on-accent: #F6F1E7;
+    margin-top: 108px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: #E8ECFA;
+    padding: 80px 0;
+  }
+
+  section.fsae .project-grid {
+    width: min(100% - 96px, 1180px);
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  /* ===================== 02 · RESEARCH — full-bleed band ===================== */
+  section.research {
+    --accent: #4F6B42;
+    --bright: #8FAE7A;
+    --on-accent: #F6F1E7;
+    margin-top: 108px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: #E7EEDD;
+    padding: 88px 0;
+  }
+
+  section.research .project-grid {
+    width: min(100% - 96px, 1180px);
+    max-width: 1180px;
+    margin: 0 auto;
+    grid-template-columns: 1fr 168px;
+  }
+
+  section.research .proj-num-wrap { order: 2; text-align: right; }
+  section.research .content-col { order: 1; }
+  section.research .proj-meta { border-left: none; border-right: 2px solid var(--accent); padding-left: 0; padding-right: 14px; text-align: right; }
+
+  /* ===================== 03 · E-INK DESIGN — full-bleed band ===================== */
+  section.eink {
+    --accent: #B8402A;
+    --bright: #EE6A4C;
+    --on-accent: #F6F1E7;
+    margin-top: 108px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: #FBE8E1;
+    padding: 80px 0;
+  }
+
+  .eink-shape {
+    position: absolute;
+    top: 10px;
+    right: 2%;
+    width: 240px;
+    height: 240px;
+    border: 3px solid var(--bright);
+    transform: rotate(9deg);
+    opacity: 0.35;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  section.eink .project-grid {
+    width: min(100% - 96px, 1180px);
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===================== 04 · WRITING — full-bleed band ===================== */
+  section.writing {
+    --accent: #9C5A1E;
+    --bright: #DB8A3F;
+    --on-accent: #F6F1E7;
+    margin-top: 108px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: #F6E9D6;
+    padding: 80px 0;
+  }
+
+  section.writing .project-grid {
+    width: min(100% - 96px, 1180px);
+    max-width: 1180px;
+    margin: 0 auto;
+    grid-template-columns: 1fr;
+  }
+  section.writing .proj-num-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 28px;
+    margin-bottom: 8px;
+  }
+  section.writing .proj-meta { margin-top: 0; border-left: none; padding-left: 0; }
+
+  /* ===================== 05 · AWARDS — full-bleed band ===================== */
+  section.awards {
+    --accent: #8A6A12;
+    --bright: #EFC24E;
+    --on-accent: #17203A;
+    margin-top: 108px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: #F7EFC9;
+    padding: 80px 0;
+  }
+
+  section.awards .project-grid {
+    width: min(100% - 96px, 1180px);
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .award-row {
+    display: grid;
+    grid-template-columns: 118px 1fr;
+    column-gap: 26px;
+    align-items: start;
+    margin-top: 34px;
+    padding: 22px 20px;
+    background: var(--cream-2);
+    position: relative;
+  }
+
+  .award-row::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: var(--bright);
+  }
+
+  .award-row:first-of-type { margin-top: 8px; }
+
+  .award-year {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 2.4rem;
+    color: var(--accent);
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .award-source {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    margin: 2px 0 10px;
+  }
+
+  /* ===================== 06 · MUSIC — full-bleed band ===================== */
+  section.music {
+    --accent: #3B4C86;
+    --bright: #EE6A4C;
+    --on-accent: #F6F1E7;
+    margin-top: 108px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: #EAEAF1;
+    padding: 80px 0;
+    overflow: hidden;
+  }
+
+  .music-shape {
+    position: absolute;
+    bottom: -140px;
+    left: -8vw;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, var(--bright), transparent 70%);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  section.music .project-grid {
+    width: min(100% - 96px, 1180px);
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===================== footer ===================== */
+  footer {
+    margin-top: 120px;
+    padding: 40px 0 64px;
+    border-top: 1.5px solid var(--ink);
+  }
+
+  footer .eyebrow { display: block; margin-bottom: 18px; }
+
+  footer .links { --accent: #16213D; --on-accent: #F6F1E7; }
+
+  @media (max-width: 760px) {
+    main { width: min(100% - 48px, 1180px); padding-top: 56px; }
+
+    .hero-shape { width: 70vw; top: -20px; }
+    header.hero h1 { font-size: clamp(2.6rem, 13vw, 4rem); }
+
+    .project-grid,
+    section.research .project-grid {
+      grid-template-columns: 1fr !important;
+      row-gap: 14px;
+    }
+
+    section.research .proj-num-wrap,
+    section.research .content-col { order: initial; text-align: left; }
+    section.research .proj-meta { border-right: none; border-left: 2px solid var(--accent); padding-right: 0; padding-left: 14px; text-align: left; }
+
+    .proj-num { font-size: 3.6rem; }
+    .proj-meta { border-left: 2px solid var(--accent); padding-left: 14px; margin-top: 0; }
+
+    section.fsae, section.research, section.eink, section.writing, section.awards, section.music { padding-left: 0; padding-right: 0; }
+    section.fsae .project-grid,
+    section.research .project-grid,
+    section.eink .project-grid,
+    section.writing .project-grid,
+    section.awards .project-grid,
+    section.music .project-grid { width: min(100% - 48px, 1180px); }
+
+    .eink-shape { width: 150px; height: 150px; right: -20px; }
+
+    .award-row { grid-template-columns: 1fr; row-gap: 6px; padding: 20px 16px; }
+    .award-year { font-size: 1.7rem; }
+
+    .index-row .idx-name { font-size: 1.5rem; }
   }
 </style>
 </head>
 <body>
 <main>
 
-  <header class="hero">
-    <span class="meta">Berkeley, CA</span>
+  <header class="hero reveal">
+    <span class="eyebrow">Berkeley, CA</span>
     <h1>Yumo Liu</h1>
     <p class="role">I like connecting the disparate parts of a system — technical, human, and everything between. Cognitive Science student at UC Berkeley (Computational Modeling), minoring in Computer Science and Data Science.</p>
+    <div class="hero-shape" aria-hidden="true"></div>
   </header>
 
-  <div class="diagram-wrap" aria-hidden="false" role="img" aria-label="Diagram connecting five areas of work — FSAE, research, design, writing, and music — to a central point.">
-    <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
-      <path class="node-line" d="M 280 150 L 280 50" />
-      <path class="node-line" d="M 280 150 L 375 119" />
-      <path class="node-line" d="M 280 150 L 339 231" />
-      <path class="node-line" d="M 280 150 L 221 231" />
-      <path class="node-line" d="M 280 150 L 185 119" />
+  <nav class="index reveal" aria-label="Section index">
+    <span class="eyebrow">Index</span>
 
-      <circle class="node-dot center" cx="280" cy="150" r="20" />
-      <text class="node-label center" x="280" y="154" text-anchor="middle">YL</text>
+    <a class="index-row" href="#fsae" style="--row-accent:#2B3FA6">
+      <span class="index-left"><span class="idx-num">01</span><span class="idx-name">FSAE (Berkeley Formula Racing)</span></span>
+      <span class="idx-arrow">&rarr;</span>
+    </a>
+    <a class="index-row" href="#research" style="--row-accent:#4F6B42">
+      <span class="index-left"><span class="idx-num">02</span><span class="idx-name">Research</span></span>
+      <span class="idx-arrow">&rarr;</span>
+    </a>
+    <a class="index-row" href="#eink" style="--row-accent:#B8402A">
+      <span class="index-left"><span class="idx-num">03</span><span class="idx-name">Design</span></span>
+      <span class="idx-arrow">&rarr;</span>
+    </a>
+    <a class="index-row" href="#writing" style="--row-accent:#9C5A1E">
+      <span class="index-left"><span class="idx-num">04</span><span class="idx-name">Writing</span></span>
+      <span class="idx-arrow">&rarr;</span>
+    </a>
+    <a class="index-row" href="#awards" style="--row-accent:#8A6A12">
+      <span class="index-left"><span class="idx-num">05</span><span class="idx-name">Awards</span></span>
+      <span class="idx-arrow">&rarr;</span>
+    </a>
+    <a class="index-row" href="#music" style="--row-accent:#7C93F0">
+      <span class="index-left"><span class="idx-num">06</span><span class="idx-name">Music</span></span>
+      <span class="idx-arrow">&rarr;</span>
+    </a>
+    <a class="index-row" href="#contact" style="--row-accent:#EE6A4C">
+      <span class="index-left"><span class="idx-num">07</span><span class="idx-name">Contact</span></span>
+      <span class="idx-arrow">&rarr;</span>
+    </a>
+  </nav>
 
-      <a class="node-link" href="#fsae" aria-label="Jump to FSAE section">
-        <circle class="node-dot" cx="280" cy="50" r="16" />
-        <text class="node-label" x="280" y="12" text-anchor="middle">FSAE</text>
-      </a>
+  <section id="fsae" class="project fsae reveal">
+    <div class="project-grid">
+      <div>
+        <div class="proj-num">01</div>
+        <div class="proj-meta">Berkeley Formula SAE<br>Sept 2025 &mdash; present</div>
+      </div>
+      <div>
+        <span class="kicker">Data &amp; Tooling</span>
+        <h2>Data Infrastructure &amp; Tooling</h2>
+        <p>Aerodynamics simulation results were scattered across individual spreadsheets, with no shared source of truth and no easy way to compare configurations across a season. I scoped a centralized workflow, defined the naming convention the team now uses to log every simulation, and directed development of an automated pipeline that turns new CFD uploads into a queryable dataset.</p>
+        <p>A companion web app lets teammates explore and compare simulations directly — pulling up scene renders, comparison graphs, and exportable tables in design reviews. I drove adoption through documentation and weekly walkthroughs, then expanded it based on ongoing feedback: cross-simulation comparison, new tracked parameters, and carbon-fiber mass estimation from CFD-derived geometry.</p>
+        <div class="stat">Cut post-processing time by ~85%.</div>
+        <p class="placeholder-note">Built for internal use by a 6-person aerodynamics subteam. The version linked below is a demo, built separately for portfolio and interview purposes — not the live internal tool.</p>
+        <div class="links">
+          <a class="btn-link" href="https://amerl07.github.io/bfr-database-demo/" target="_blank" rel="noopener">View the demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <a class="node-link" href="#research" aria-label="Jump to research section">
-        <circle class="node-dot" cx="375" cy="119" r="16" />
-        <text class="node-label" x="411" y="112" text-anchor="middle">Research</text>
-      </a>
+  <section id="research" class="project research reveal">
+    <div class="project-grid">
+      <div class="content-col">
+        <span class="kicker">Environmental Data</span>
+        <h2>Environmental Data Analysis</h2>
+        <p>A peer-reviewed book chapter analyzing global PM2.5 pollution patterns across a 12-year, multi-source dataset — satellite measurements, meteorological reanalysis, and socioeconomic indicators spanning 18 regions.</p>
+        <p>I engineered data pipelines (MATLAB, Python) to clean, standardize, and restructure the dataset, applying hierarchical clustering to expose non-linear spatiotemporal patterns, then built per-pollutant Random Forest regression models (scikit-learn) to isolate the anthropogenic and meteorological drivers behind them.</p>
+        <div class="links">
+          <a class="btn-link" href="https://doi.org/10.1007/978-3-032-21985-5_34" target="_blank" rel="noopener">Read the chapter</a>
+        </div>
+      </div>
+      <div class="proj-num-wrap">
+        <div class="proj-num">02</div>
+        <div class="proj-meta">Springer Nature<br>(AquaNexus)<br>Aug 2024 &mdash; May 2026</div>
+      </div>
+    </div>
+  </section>
 
-      <a class="node-link" href="#eink" aria-label="Jump to design section">
-        <circle class="node-dot accent" cx="339" cy="231" r="16" />
-        <text class="node-label" x="361" y="266" text-anchor="middle">Design</text>
-      </a>
+  <section id="eink" class="project eink reveal">
+    <div class="project-grid">
+      <div class="eink-shape" aria-hidden="true"></div>
+      <div>
+        <div class="proj-num">03</div>
+        <div class="proj-meta">Early-stage e-ink<br>Bible-reader startup<br>June &mdash; Aug 2025</div>
+      </div>
+      <div>
+        <span class="kicker">Product Design / UX</span>
+        <h2>E-Ink Reader Interface — Product Design / UX</h2>
+        <p>I designed the navigation architecture and user flows for an early-stage e-ink reading device, covering reading, notes, calendar, and reading-plan features — mapped out through hand-drawn wireframes, then refined based on usability reasoning and intuitive user behavior.</p>
+        <div class="links">
+          <a class="btn-link" href="https://drive.google.com/file/d/1sVgRym6we5EyV4ox--nwmoeAgGDk8ojS/view?usp=drive_link" target="_blank" rel="noopener">View the wireframes</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <a class="node-link" href="#writing" aria-label="Jump to writing section">
-        <circle class="node-dot accent" cx="221" cy="231" r="16" />
-        <text class="node-label" x="199" y="266" text-anchor="middle">Writing</text>
-      </a>
+  <section id="writing" class="project writing reveal">
+    <div class="project-grid">
+      <div>
+        <div class="proj-num-row">
+          <div class="proj-num">04</div>
+          <div class="proj-meta">Coursework<br>UC Berkeley</div>
+        </div>
+        <span class="kicker">Essays</span>
+        <h2>Writing Across Disciplines</h2>
+        <p>The same instinct that drives the technical work — finding the connective structure between things that don't obviously belong together — shows up in my academic writing too.</p>
 
-      <a class="node-link" href="#music" aria-label="Jump to music section">
-        <circle class="node-dot accent" cx="185" cy="119" r="16" />
-        <text class="node-label" x="149" y="112" text-anchor="middle">Music</text>
-      </a>
-    </svg>
-  </div>
+        <div class="subwork">
+          <h3>Cognitive frameworks in film scoring</h3>
+          <p>An analysis of how principles from cognitive science shape the way film music guides audience perception and emotion.</p>
+          <div class="links">
+            <a class="btn-link" href="https://drive.google.com/file/d/1XDkG8f0m4jtfOLkoIKZUZTfqsd03bOXv/view?usp=sharing" target="_blank" rel="noopener">Read the essay</a>
+          </div>
+        </div>
 
-  <section id="fsae">
-    <span class="meta">Berkeley Formula SAE — Sept 2025 to present</span>
-    <h2>Data Infrastructure &amp; Tooling</h2>
-    <p>Aerodynamics simulation results were scattered across individual spreadsheets, with no shared source of truth and no easy way to compare configurations across a season. I scoped a centralized workflow, defined the naming convention the team now uses to log every simulation, and directed development of an automated pipeline that turns new CFD uploads into a queryable dataset.</p>
-    <p>A companion web app lets teammates explore and compare simulations directly — pulling up scene renders, comparison graphs, and exportable tables in design reviews. I drove adoption through documentation and weekly walkthroughs, then expanded it based on ongoing feedback: cross-simulation comparison, new tracked parameters, and carbon-fiber mass estimation from CFD-derived geometry.</p>
-    <p>Cut post-processing time by ~85%</p>
-    <p class="placeholder-note">Built for internal use by a 6-person aerodynamics subteam. The version linked below is a demo, built separately for portfolio and interview purposes — not the live internal tool.</p>
+        <div class="subwork">
+          <h3>Hesse and early manga: a dialogue across media</h3>
+          <p>An essay tracing an unexpected throughline between Hermann Hesse's writing and early manga.</p>
+          <div class="links">
+            <a class="btn-link" href="https://drive.google.com/file/d/1j2-PAG7wckiYPSPkuc6xFq4GH_WnZxFZ/view?usp=sharing" target="_blank" rel="noopener">Read the essay</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="awards" class="project awards reveal">
+    <div class="project-grid">
+      <div>
+        <div class="proj-num">05</div>
+        <div class="proj-meta">Recognition</div>
+      </div>
+      <div>
+        <span class="kicker">Awards &amp; Honors</span>
+        <h2>Awards &amp; Honors</h2>
+
+        <div class="award-row">
+          <span class="award-year">2024</span>
+          <div>
+            <h3>Top in World, A-Level English Language Exam</h3>
+            <p class="award-source">Oxford AQA &mdash; Oct 2024</p>
+            <p>Received the highest grade in the world on the International A-Level English Language exam, issued by Oxford AQA in the 2024 GoFurther Awards.</p>
+          </div>
+        </div>
+
+        <div class="award-row">
+          <span class="award-year">2023</span>
+          <div>
+            <h3>Winner, Energy &amp; Environment Track</h3>
+            <p class="award-source">Conrad Challenge, China &mdash; Mar 2023</p>
+            <p>Co-founded and pitched Lovaqua, a portable water-purification and quality-monitoring device.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="music" class="project music reveal">
+    <div class="music-shape" aria-hidden="true"></div>
+    <div class="project-grid">
+      <div>
+        <div class="proj-num">06</div>
+        <div class="proj-meta">Personal practice</div>
+      </div>
+      <div>
+        <span class="kicker">Composing</span>
+        <h2>Composing</h2>
+        <p>I compose as a self-taught hobbyist, mostly in GarageBand, pairing live-recorded tin whistle and recorder with keyboard and sampled orchestral libraries. Videos are typically GarageBand screen recordings paired with Midjourney-generated imagery.</p>
+
+        <div class="subwork">
+          <h3>Crescent Continuum</h3>
+          <p>A world-fusion piece built around an Arabian scale (C Phrygian Dominant) and tin whistle, inspired by "Noor" by Gobi Desert Collective.</p>
+          <div class="links">
+            <a class="btn-link" href="https://drive.google.com/file/d/11LgV2ifT70WKzTwwD5XhaB7hJWAVOG9P/view?usp=sharing" target="_blank" rel="noopener">Watch</a>
+          </div>
+        </div>
+
+        <div class="subwork">
+          <h3>A Crayon Odyssey</h3>
+          <p>A paper boat sets sail from a blank page, weathering crayon storms and lightning, then races past gravity into a sea of stars — until the storm and the universe both disappear, and the whole epic turns out to be a child's crayon doodle on a desktop. Maybe we're all just paper boats, staging epic battles in universes that exist only in our heads.</p>
+          <p class="placeholder-note">GarageBand and a Yamaha PSR-E463 keyboard, with live-recorded Irish tin whistle and Splice instruments. Storyboard support from Nano Banana, rendered with Midjourney.</p>
+          <div class="links">
+            <a class="btn-link" href="https://drive.google.com/file/d/1rhurXtkrhCiMEFEmFeBMmdEKSdrA7VUD/view?usp=sharing" target="_blank" rel="noopener">Watch</a>
+          </div>
+        </div>
+
+        <div class="subwork">
+          <h3>To the Bitter End</h3>
+          <p>A Harry Potter tribute edit set to an original score. I've been a devoted fan for years! Writing an original piece for a recut of the series felt like closing a loop.</p>
+          <p class="placeholder-note">GarageBand and a Yamaha PSR-E463 keyboard, with Spitfire BBC Symphony Orchestra (Discover). Footage drawn from the Harry Potter film series.</p>
+          <div class="links">
+            <a class="btn-link" href="https://drive.google.com/file/d/1yBJ_FlYq2cCPmGFO9vQQrkp0h1E4JaA3/view?usp=drive_link" target="_blank" rel="noopener">Watch</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="reveal">
+    <span class="eyebrow">Get in touch</span>
     <div class="links">
-      <a href="https://amerl07.github.io/bfr-database-demo/" target="_blank" rel="noopener">View the demo →</a>
-    </div>
-  </section>
-
-  <section id="research">
-    <span class="meta">Springer Nature (AquaNexus) — Aug 2024 to May 2026</span>
-    <h2>Environmental Data Analysis</h2>
-    <p>A peer-reviewed book chapter analyzing global PM2.5 pollution patterns across a 12-year, multi-source dataset — satellite measurements, meteorological reanalysis, and socioeconomic indicators spanning 18 regions.</p>
-    <p>I engineered data pipelines (MATLAB, Python) to clean, standardize, and restructure the dataset, applying hierarchical clustering to expose non-linear spatiotemporal patterns, then built per-pollutant Random Forest regression models (scikit-learn, R² up to 0.99) to isolate the anthropogenic and meteorological drivers behind them.</p>
-    <div class="links">
-      <a href="https://doi.org/10.1007/978-3-032-21985-5_34" target="_blank" rel="noopener">Read the chapter →</a>
-    </div>
-  </section>
-
-  <section id="eink">
-    <span class="meta">Early-stage e-ink Bible-reader startup — June 2025 to August 2025</span>
-    <h2>E-Ink Reader Interface — Product Design / UX</h2>
-    <p>I designed the navigation architecture and user flows for an early-stage e-ink reading device, covering reading, notes, calendar, and reading-plan features — mapped out through hand-drawn wireframes, then refined based on usability reasoning and intuitive user behavior.</p>
-    <div class="links">
-      <a href="https://drive.google.com/file/d/1sVgRym6we5EyV4ox--nwmoeAgGDk8ojS/view?usp=drive_link" target="_blank" rel="noopener">View the wireframes →</a>
-    </div>
-  </section>
-
-  <section id="writing">
-    <span class="meta">Coursework, UC Berkeley</span>
-    <h2>Writing Across Disciplines</h2>
-    <p>The same instinct that drives the technical work — finding the connective structure between things that don't obviously belong together — shows up in my academic writing too.</p>
-
-    <div class="subwork">
-      <h3>Cognitive frameworks in film scoring</h3>
-      <p>An analysis of how principles from cognitive science shape the way film music guides audience perception and emotion.</p>
-      <div class="links">
-        <a href="https://drive.google.com/file/d/1XDkG8f0m4jtfOLkoIKZUZTfqsd03bOXv/view?usp=sharing" target="_blank" rel="noopener">Read the essay →</a>
-      </div>
-    </div>
-
-    <div class="subwork">
-      <h3>Hesse and early manga: a dialogue across media</h3>
-      <p>An essay tracing an unexpected throughline between Hermann Hesse's writing and early manga.</p>
-      <div class="links">
-        <a href="https://drive.google.com/file/d/1j2-PAG7wckiYPSPkuc6xFq4GH_WnZxFZ/view?usp=sharing" target="_blank" rel="noopener">Read the essay →</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="music">
-    <span class="meta">Personal practice</span>
-    <h2>Composing</h2>
-    <p>I compose as a self-taught hobbyist, mostly in GarageBand, pairing live-recorded tin whistle and recorder with keyboard and sampled orchestral libraries. Videos are typically GarageBand screen recordings paired with Midjourney-generated imagery.</p>
-
-    <div class="subwork">
-      <h3>Crescent Continuum</h3>
-      <p>A world-fusion piece built around an Arabian scale (C Phrygian Dominant) and tin whistle, inspired by "Noor" by Gobi Desert Collective.</p>
-      <div class="links">
-        <a href="https://drive.google.com/file/d/11LgV2ifT70WKzTwwD5XhaB7hJWAVOG9P/view?usp=sharing" target="_blank" rel="noopener">Watch →</a>
-      </div>
-    </div>
-
-    <div class="subwork">
-      <h3>A Crayon Odyssey</h3>
-      <p>A paper boat sets sail from a blank page, weathering crayon storms and lightning, then races past gravity into a sea of stars — until the storm and the universe both disappear, and the whole epic turns out to be a child's crayon doodle on a desktop. A god-like hand reaches down, takes the boat away, and everything resets to zero. Maybe we're all just paper boats, staging epic battles in universes that exist only in our heads.</p>
-      <p class="placeholder-note">GarageBand and a Yamaha PSR-E463 keyboard, with live-recorded Irish tin whistle and Splice instruments. Storyboard support from Nano Banana, rendered with Midjourney.</p>
-      <div class="links">
-        <a href="https://drive.google.com/file/d/1rhurXtkrhCiMEFEmFeBMmdEKSdrA7VUD/view?usp=sharing" target="_blank" rel="noopener">Watch →</a>
-      </div>
-    </div>
-
-    <div class="subwork">
-      <h3>To the Bitter End</h3>
-      <p>A Harry Potter tribute edit set to an original score. I've been a devoted fan for years — performed the films' themes on several instruments and once analyzed the third film's score for an academic paper — so writing an original piece for a recut of the series felt like closing a loop.</p>
-      <p class="placeholder-note">GarageBand and a Yamaha PSR-E463 keyboard, with Spitfire BBC Symphony Orchestra (Discover). Footage drawn from the Harry Potter film series.</p>
-      <div class="links">
-        <a href="https://drive.google.com/file/d/1yBJ_FlYq2cCPmGFO9vQQrkp0h1E4JaA3/view?usp=drive_link" target="_blank" rel="noopener">Watch →</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="links">
-      <a href="mailto:liuyumo422@gmail.com">liuyumo422@gmail.com</a>
-      <a href="https://linkedin.com/in/liu-yumo" target="_blank" rel="noopener">linkedin.com/in/liu-yumo</a>
+      <a class="btn-link" href="mailto:liuyumo422@gmail.com">liuyumo422@gmail.com</a>
+      <a class="btn-link" href="https://linkedin.com/in/liu-yumo" target="_blank" rel="noopener">linkedin.com/in/liu-yumo</a>
+      <a class="btn-link" href="https://drive.google.com/file/d/1MMCeIomk2CKCYQpf76qiwG_iW8lFMR1G/view?usp=sharing" target="_blank" rel="noopener">View resume</a>
     </div>
   </footer>
 
 </main>
+
+<script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var items = document.querySelectorAll('.reveal');
+    if (reduce || !('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('is-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  })();
+</script>
 </body>
 </html>
